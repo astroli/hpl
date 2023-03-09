@@ -91,6 +91,8 @@
 #include "hpl_pmatgen.h"
 #include "hpl_ptest.h"
 
+#include "hpl_mxu.h"
+
 #endif
 /*
  * End of hpl.h

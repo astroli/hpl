@@ -151,6 +151,16 @@ int main( ARGC, ARGV )
                &npfs, pfaval, &nbms, nbmval, &ndvs, ndvval, &nrfs, rfaval,
                &ntps, topval, &ndhs, ndhval, &fswap, &tswap, &L1notran,
                &Unotran, &equil, &align );
+
+#ifdef HPL_MXU_PROFILING
+   if( rank == 0 )
+   {
+      mxu_reset_insn_cnt();
+      mxu_select_default_insn_cnt();
+      mxu_start_insn_cnt();
+   }
+#endif
+
 /*
  * Loop over different process grids - Define process grid. Go to bottom
  * of process grid loop if this case does not use my process.
@@ -279,6 +289,12 @@ label_end_of_npqs: ;
 
       if( ( test.outfp != stdout ) && ( test.outfp != stderr ) )
          (void) fclose( test.outfp );
+
+#ifdef HPL_MXU_PROFILING
+      mxu_stop_insn_cnt();
+      mxu_show_insn_cnt();
+#endif
+
    }
 #ifdef HPL_CALL_VSIPL
    vsip_finalize((void*)0);

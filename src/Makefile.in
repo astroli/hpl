@@ -201,7 +201,8 @@ am_libhpl_a_OBJECTS = auxil/HPL_dlatcpy.$(OBJEXT) \
 	pgesv/HPL_pdlaswp01T.$(OBJEXT) pgesv/HPL_pdtrsv.$(OBJEXT) \
 	pgesv/HPL_pdupdateNN.$(OBJEXT) pgesv/HPL_pdupdateNT.$(OBJEXT) \
 	pgesv/HPL_pdupdateTN.$(OBJEXT) pgesv/HPL_pdupdateTT.$(OBJEXT) \
-	pgesv/HPL_logsort.$(OBJEXT) pgesv/HPL_perm.$(OBJEXT)
+	pgesv/HPL_logsort.$(OBJEXT) pgesv/HPL_perm.$(OBJEXT) \
+	mxu/HPL_mxu.$(OBJEXT)
 libhpl_a_OBJECTS = $(am_libhpl_a_OBJECTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -288,7 +289,8 @@ am__depfiles_remade = auxil/$(DEPDIR)/HPL_dlacpy.Po \
 	pgesv/$(DEPDIR)/HPL_pipid.Po pgesv/$(DEPDIR)/HPL_plindx0.Po \
 	pgesv/$(DEPDIR)/HPL_plindx1.Po pgesv/$(DEPDIR)/HPL_plindx10.Po \
 	pgesv/$(DEPDIR)/HPL_rollN.Po pgesv/$(DEPDIR)/HPL_rollT.Po \
-	pgesv/$(DEPDIR)/HPL_spreadN.Po pgesv/$(DEPDIR)/HPL_spreadT.Po
+	pgesv/$(DEPDIR)/HPL_spreadN.Po pgesv/$(DEPDIR)/HPL_spreadT.Po \
+	mxu/$(DEPDIR)/HPL_mxu.Po
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
@@ -459,7 +461,8 @@ pgesv/HPL_rollN.c pgesv/HPL_rollT.c pgesv/HPL_spreadN.c pgesv/HPL_spreadT.c \
 pgesv/HPL_pdgesv0.c pgesv/HPL_pdgesv.c pgesv/HPL_pdgesvK1.c pgesv/HPL_pdgesvK2.c pgesv/HPL_pdgesv0.c pgesv/HPL_pdgesvK2.c \
 pgesv/HPL_pdlaswp00N.c pgesv/HPL_pdlaswp00T.c pgesv/HPL_pdlaswp01N.c pgesv/HPL_pdlaswp01T.c \
 pgesv/HPL_pdtrsv.c pgesv/HPL_pdupdateNN.c pgesv/HPL_pdupdateNT.c pgesv/HPL_pdupdateTN.c \
-pgesv/HPL_pdupdateTT.c pgesv/HPL_logsort.c pgesv/HPL_perm.c
+pgesv/HPL_pdupdateTT.c pgesv/HPL_logsort.c pgesv/HPL_perm.c \
+mxu/HPL_mxu.c
 
 all: all-am
 
@@ -777,6 +780,14 @@ pgesv/HPL_logsort.$(OBJEXT): pgesv/$(am__dirstamp) \
 	pgesv/$(DEPDIR)/$(am__dirstamp)
 pgesv/HPL_perm.$(OBJEXT): pgesv/$(am__dirstamp) \
 	pgesv/$(DEPDIR)/$(am__dirstamp)
+mxu/$(am__dirstamp):
+	@$(MKDIR_P) mxu
+	@: > mxu/$(am__dirstamp)
+mxu/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) mxu/$(DEPDIR)
+	@: > mxu/$(DEPDIR)/$(am__dirstamp)
+mxu/HPL_mxu.$(OBJEXT): mxu/$(am__dirstamp) \
+	mxu/$(DEPDIR)/$(am__dirstamp)
 
 libhpl.a: $(libhpl_a_OBJECTS) $(libhpl_a_DEPENDENCIES) $(EXTRA_libhpl_a_DEPENDENCIES) 
 	$(AM_V_at)-rm -f libhpl.a
@@ -793,6 +804,7 @@ mostlyclean-compile:
 	-rm -f pauxil/*.$(OBJEXT)
 	-rm -f pfact/*.$(OBJEXT)
 	-rm -f pgesv/*.$(OBJEXT)
+	-rm -f mxu/*.$(OBJEXT)
 
 distclean-compile:
 	-rm -f *.tab.c
@@ -899,6 +911,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@pgesv/$(DEPDIR)/HPL_rollT.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@pgesv/$(DEPDIR)/HPL_spreadN.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@pgesv/$(DEPDIR)/HPL_spreadT.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@mxu/$(DEPDIR)/HPL_mxu.Po@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
 	@$(MKDIR_P) $(@D)
@@ -1056,6 +1069,8 @@ distclean-generic:
 	-rm -f pfact/$(am__dirstamp)
 	-rm -f pgesv/$(DEPDIR)/$(am__dirstamp)
 	-rm -f pgesv/$(am__dirstamp)
+	-rm -f mxu/$(DEPDIR)/$(am__dirstamp)
+	-rm -f mxu/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
@@ -1167,6 +1182,7 @@ distclean: distclean-am
 	-rm -f pgesv/$(DEPDIR)/HPL_rollT.Po
 	-rm -f pgesv/$(DEPDIR)/HPL_spreadN.Po
 	-rm -f pgesv/$(DEPDIR)/HPL_spreadT.Po
+	-rm -f mxu/$(DEPDIR)/HPL_mxu.Po
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -1314,6 +1330,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f pgesv/$(DEPDIR)/HPL_rollT.Po
 	-rm -f pgesv/$(DEPDIR)/HPL_spreadN.Po
 	-rm -f pgesv/$(DEPDIR)/HPL_spreadT.Po
+	-rm -f mxu/$(DEPDIR)/HPL_mxu.Po
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

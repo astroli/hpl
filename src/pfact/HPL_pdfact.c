@@ -114,6 +114,9 @@ void HPL_pdfact
    jb = PANEL->jb; PANEL->n -= jb; PANEL->ja += jb;
 
    if( ( PANEL->grid->mycol != PANEL->pcol ) || ( jb <= 0 ) ) return;
+#ifdef HPL_MXU_PROFILING
+   mxu_select_pdfact_insn_cnt();
+#endif
 #ifdef HPL_DETAILED_TIMING
    HPL_ptimer( HPL_TIMING_RPFACT );
 #endif
@@ -134,6 +137,9 @@ void HPL_pdfact
    PANEL->nq -= jb; PANEL->jj += jb;
 #ifdef HPL_DETAILED_TIMING
    HPL_ptimer( HPL_TIMING_RPFACT );
+#endif
+#ifdef HPL_MXU_PROFILING
+   mxu_select_default_insn_cnt();
 #endif
 /*
  * End of HPL_pdfact

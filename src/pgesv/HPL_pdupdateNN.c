@@ -113,6 +113,9 @@ void HPL_pdupdateNN
 /* ..
  * .. Executable Statements ..
  */
+#ifdef HPL_MXU_PROFILING
+   mxu_select_pdupdate_insn_cnt();
+#endif
 #ifdef HPL_DETAILED_TIMING
    HPL_ptimer( HPL_TIMING_UPDATE );
 #endif
@@ -130,6 +133,9 @@ void HPL_pdupdateNN
       }
 #ifdef HPL_DETAILED_TIMING
       HPL_ptimer( HPL_TIMING_UPDATE );
+#endif
+#ifdef HPL_MXU_PROFILING
+      mxu_select_default_insn_cnt();
 #endif
       return;
    }
@@ -180,8 +186,15 @@ void HPL_pdupdateNN
 #else
          HPL_dlaswp00N( jb, nn, Aptr, lda, ipiv );
 #endif
+#ifdef HPL_MXU_PROFILING
+         mxu_select_pdupdate_dtrsm_insn_cnt();
+
+#endif
          HPL_dtrsm( HplColumnMajor, HplLeft, HplLower, HplNoTrans,
                     HplUnit, jb, nn, HPL_rone, L1ptr, jb, Aptr, lda );
+#ifdef HPL_MXU_PROFILING
+         mxu_select_pdupdate_insn_cnt();
+#endif
 #ifdef HPL_CALL_VSIPL
 /*
  * Create the matrix subviews
@@ -197,9 +210,18 @@ void HPL_pdupdateNN
          (void) vsip_mdestroy_d( Av1 );
          (void) vsip_mdestroy_d( Uv1 );
 #else
+
+#ifdef HPL_MXU_PROFILING
+         mxu_select_pdupdate_dgemm_insn_cnt();
+#endif
+
          HPL_dgemm( HplColumnMajor, HplNoTrans, HplNoTrans, mp, nn,
                     jb, -HPL_rone, L2ptr, ldl2, Aptr, lda, HPL_rone,
                     Mptr( Aptr, jb, 0, lda ), lda );
+#ifdef HPL_MXU_PROFILING
+         mxu_select_pdupdate_insn_cnt();
+#endif
+
 #endif
          Aptr = Mptr( Aptr, 0, nn, lda ); nq0 += nn; 
 
@@ -217,8 +239,17 @@ void HPL_pdupdateNN
 #else
          HPL_dlaswp00N( jb, nn, Aptr, lda, ipiv );
 #endif
+#ifdef HPL_MXU_PROFILING
+         mxu_select_pdupdate_dtrsm_insn_cnt();
+#endif
+
          HPL_dtrsm( HplColumnMajor, HplLeft, HplLower, HplNoTrans,
                     HplUnit, jb, nn, HPL_rone, L1ptr, jb, Aptr, lda );
+
+
+#ifdef HPL_MXU_PROFILING
+         mxu_select_pdupdate_insn_cnt();
+#endif
 #ifdef HPL_CALL_VSIPL
 /*
  * Create the matrix subviews
@@ -234,9 +265,18 @@ void HPL_pdupdateNN
          (void) vsip_mdestroy_d( Av1 );
          (void) vsip_mdestroy_d( Uv1 );
 #else
+#ifdef HPL_MXU_PROFILING
+         if (mp && nn && jb) {
+            mxu_select_pdupdate_dgemm_insn_cnt();
+         }
+#endif
          HPL_dgemm( HplColumnMajor, HplNoTrans, HplNoTrans, mp, nn,
                     jb, -HPL_rone, L2ptr, ldl2, Aptr, lda, HPL_rone,
                     Mptr( Aptr, jb, 0, lda ), lda );
+#ifdef HPL_MXU_PROFILING
+         mxu_select_pdupdate_insn_cnt();
+#endif
+
 #endif
       }
 #ifdef HPL_CALL_VSIPL
@@ -301,8 +341,14 @@ void HPL_pdupdateNN
       {
          nn = n - nq0; nn = Mmin( nb, nn );
 
+#ifdef HPL_MXU_PROFILING
+         mxu_select_pdupdate_dtrsm_insn_cnt();
+#endif
          HPL_dtrsm( HplColumnMajor, HplLeft,  HplLower, HplNoTrans,
                     HplUnit, jb, nn, HPL_rone, L1ptr, jb, Uptr, LDU );
+#ifdef HPL_MXU_PROFILING
+         mxu_select_pdupdate_insn_cnt();
+#endif
          if( curr != 0 )
          {
 #ifdef HPL_CALL_VSIPL
@@ -320,9 +366,17 @@ void HPL_pdupdateNN
             (void) vsip_mdestroy_d( Av1 );
             (void) vsip_mdestroy_d( Uv1 );
 #else
+
+#ifdef HPL_MXU_PROFILING
+            mxu_select_pdupdate_dgemm_insn_cnt();
+#endif
             HPL_dgemm( HplColumnMajor, HplNoTrans, HplNoTrans, mp, nn,
                        jb, -HPL_rone, L2ptr, ldl2, Uptr, LDU, HPL_rone,
                        Mptr( Aptr, jb, 0, lda ), lda );
+#ifdef HPL_MXU_PROFILING
+            mxu_select_pdupdate_insn_cnt();
+#endif
+
 #endif
             HPL_dlacpy( jb, nn, Uptr, LDU, Aptr, lda );
          }
@@ -343,9 +397,20 @@ void HPL_pdupdateNN
             (void) vsip_mdestroy_d( Av1 );
             (void) vsip_mdestroy_d( Uv1 );
 #else
+
+#ifdef HPL_MXU_PROFILING
+            mxu_select_pdupdate_dgemm_insn_cnt();
+#endif
+
+
             HPL_dgemm( HplColumnMajor, HplNoTrans, HplNoTrans, mp, nn,
                        jb, -HPL_rone, L2ptr, ldl2, Uptr, LDU, HPL_rone,
                        Aptr, lda );
+
+#ifdef HPL_MXU_PROFILING
+            mxu_select_pdupdate_insn_cnt();
+#endif
+
 #endif
          }
          Uptr = Mptr( Uptr, 0, nn, LDU );
@@ -358,8 +423,14 @@ void HPL_pdupdateNN
  */
       if( ( nn = n - nq0 ) > 0 )
       {
+#ifdef HPL_MXU_PROFILING
+         mxu_select_pdupdate_dtrsm_insn_cnt();
+#endif
          HPL_dtrsm( HplColumnMajor, HplLeft,  HplLower, HplNoTrans,
                     HplUnit, jb, nn, HPL_rone, L1ptr, jb, Uptr, LDU );
+#ifdef HPL_MXU_PROFILING
+         mxu_select_pdupdate_insn_cnt();
+#endif
 
          if( curr != 0 )
          {
@@ -378,9 +449,18 @@ void HPL_pdupdateNN
             (void) vsip_mdestroy_d( Av1 );
             (void) vsip_mdestroy_d( Uv1 );
 #else
+
+#ifdef HPL_MXU_PROFILING
+            mxu_select_pdupdate_dgemm_insn_cnt();
+#endif
+
             HPL_dgemm( HplColumnMajor, HplNoTrans, HplNoTrans, mp, nn,
                        jb, -HPL_rone, L2ptr, ldl2, Uptr, LDU, HPL_rone,
                        Mptr( Aptr, jb, 0, lda ), lda );
+#ifdef HPL_MXU_PROFILING
+            mxu_select_pdupdate_insn_cnt();
+#endif
+
 #endif
             HPL_dlacpy( jb, nn, Uptr, LDU, Aptr, lda );
          }
@@ -401,9 +481,17 @@ void HPL_pdupdateNN
             (void) vsip_mdestroy_d( Av1 );
             (void) vsip_mdestroy_d( Uv1 );
 #else
+
+#ifdef HPL_MXU_PROFILING
+            mxu_select_pdupdate_dgemm_insn_cnt();
+#endif
             HPL_dgemm( HplColumnMajor, HplNoTrans, HplNoTrans, mp, nn,
                        jb, -HPL_rone, L2ptr, ldl2, Uptr, LDU, HPL_rone,
                        Aptr, lda );
+#ifdef HPL_MXU_PROFILING
+            mxu_select_pdupdate_insn_cnt();
+#endif
+
 #endif
          }
       }
@@ -435,6 +523,9 @@ void HPL_pdupdateNN
    if( PBCST != NULL ) *IFLAG = test;
 #ifdef HPL_DETAILED_TIMING
    HPL_ptimer( HPL_TIMING_UPDATE );
+#endif
+#ifdef HPL_MXU_PROFILING
+   mxu_select_default_insn_cnt();
 #endif
 /*
  * End of HPL_pdupdateNN
