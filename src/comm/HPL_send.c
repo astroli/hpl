@@ -122,15 +122,15 @@ int HPL_send
    if( SCOUNT <= 0 ) return( HPL_SUCCESS );
 
 #ifdef HPL_USE_MPI_DATATYPE
-   ierr =      MPI_Type_contiguous( SCOUNT, MPI_DOUBLE, &type );
+   ierr =      HPL_MPI_Type_contiguous( SCOUNT, MPI_DOUBLE, &type );
    if( ierr == MPI_SUCCESS )
-      ierr =   MPI_Type_commit( &type );
+      ierr =   HPL_MPI_Type_commit( &type );
    if( ierr == MPI_SUCCESS )
-      ierr =   MPI_Send( (void *)(SBUF), 1, type, DEST, STAG, COMM );
+      ierr =   HPL_MPI_Send( (void *)(SBUF), 1, type, DEST, STAG, COMM );
    if( ierr == MPI_SUCCESS )
-      ierr =   MPI_Type_free( &type );
+      ierr =   HPL_MPI_Type_free( &type );
 #else
-   ierr = MPI_Send( (void *)(SBUF), SCOUNT, MPI_DOUBLE, DEST, STAG, COMM );
+   ierr = HPL_MPI_Send( (void *)(SBUF), SCOUNT, MPI_DOUBLE, DEST, STAG, COMM );
 #endif
    return( ( ierr == MPI_SUCCESS ? HPL_SUCCESS : HPL_FAILURE ) ); 
 /*

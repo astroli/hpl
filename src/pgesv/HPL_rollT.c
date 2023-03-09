@@ -186,24 +186,24 @@ void HPL_rollT
          if( ierr == MPI_SUCCESS )
          {
             if( LDU == N )
-               ierr = MPI_Type_contiguous( lengthR * LDU, MPI_DOUBLE,
-                                           &type[I_RECV] );
+               ierr = HPL_MPI_Type_contiguous( lengthR * LDU, MPI_DOUBLE,
+                                               &type[I_RECV] );
             else
-               ierr = MPI_Type_vector( lengthR, N, LDU, MPI_DOUBLE,
-                                       &type[I_RECV] );
+               ierr = HPL_MPI_Type_vector( lengthR, N, LDU, MPI_DOUBLE,
+                                           &type[I_RECV] );
          }
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Type_commit( &type[I_RECV] );
+            ierr =   HPL_MPI_Type_commit( &type[I_RECV] );
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Irecv( Mptr( U, 0, ibufR, LDU ), 1, type[I_RECV],
-                                partner, Cmsgid, comm, &request );
+            ierr =   HPL_MPI_Irecv( Mptr( U, 0, ibufR, LDU ), 1, type[I_RECV],
+                                    partner, Cmsgid, comm, &request );
 #else
 /*
  * In our case, LDU is N - Do not use the MPI datatype.
  */
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Irecv( Mptr( U, 0, ibufR, LDU ), lengthR*LDU,
-                                MPI_DOUBLE, partner, Cmsgid, comm, &request );
+            ierr =   HPL_MPI_Irecv( Mptr( U, 0, ibufR, LDU ), lengthR*LDU,
+                                    MPI_DOUBLE, partner, Cmsgid, comm, &request );
 #endif
       }
  
@@ -213,36 +213,36 @@ void HPL_rollT
          if( ierr == MPI_SUCCESS )
          {
             if( LDU == N )
-               ierr =   MPI_Type_contiguous( lengthS*LDU, MPI_DOUBLE,
-                                             &type[I_SEND] );
+               ierr =   HPL_MPI_Type_contiguous( lengthS*LDU, MPI_DOUBLE,
+                                                 &type[I_SEND] );
             else
-               ierr =   MPI_Type_vector( lengthS, N, LDU, MPI_DOUBLE,
-                                         &type[I_SEND] );
+               ierr =   HPL_MPI_Type_vector( lengthS, N, LDU, MPI_DOUBLE,
+                                             &type[I_SEND] );
          }
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Type_commit( &type[I_SEND] );
+            ierr =   HPL_MPI_Type_commit( &type[I_SEND] );
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Send( Mptr( U, 0, ibufS, LDU ), 1, type[I_SEND],
-                               partner, Cmsgid, comm );
+            ierr =   HPL_MPI_Send( Mptr( U, 0, ibufS, LDU ), 1, type[I_SEND],
+                                   partner, Cmsgid, comm );
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Type_free( &type[I_SEND] );
+            ierr =   HPL_MPI_Type_free( &type[I_SEND] );
 #else
 /*
  * In our case, LDU is N - Do not use the MPI datatype.
  */
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Send( Mptr( U, 0, ibufS, LDU ), lengthS*LDU,
-                               MPI_DOUBLE, partner, Cmsgid, comm );
+            ierr =   HPL_MPI_Send( Mptr( U, 0, ibufS, LDU ), lengthS*LDU,
+                                   MPI_DOUBLE, partner, Cmsgid, comm );
 #endif
       }
 
       if( lengthR > 0 )
       {
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Wait( &request, &status );
+            ierr =   HPL_MPI_Wait( &request, &status );
 #if 0
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Type_free( &type[I_RECV] );
+            ierr =   HPL_MPI_Type_free( &type[I_RECV] );
 #endif
       }
 /*

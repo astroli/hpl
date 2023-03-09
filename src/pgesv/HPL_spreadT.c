@@ -198,28 +198,28 @@ void HPL_spreadT
                   if( ierr == MPI_SUCCESS )
                   {
                      if( LDU == N )
-                        ierr = MPI_Type_contiguous( lbuf*LDU, MPI_DOUBLE,
-                                                    &type );
+                        ierr = HPL_MPI_Type_contiguous( lbuf*LDU, MPI_DOUBLE,
+                                                        &type );
                      else
-                        ierr = MPI_Type_vector( lbuf, N, LDU, MPI_DOUBLE,
-                                                &type );
+                        ierr = HPL_MPI_Type_vector( lbuf, N, LDU, MPI_DOUBLE,
+                                                    &type );
                   }
                   if( ierr == MPI_SUCCESS )
-                     ierr =   MPI_Type_commit( &type );
+                     ierr =   HPL_MPI_Type_commit( &type );
                   if( ierr == MPI_SUCCESS )
-                     ierr =   MPI_Recv( Mptr( U, 0, ibuf, LDU ), 1, type,
-                                        IPMAP[npm1-partner], Cmsgid, comm,
-                                        &status );
+                     ierr =   HPL_MPI_Recv( Mptr( U, 0, ibuf, LDU ), 1, type,
+                                            IPMAP[npm1-partner], Cmsgid, comm,
+                                            &status );
                   if( ierr == MPI_SUCCESS )
-                     ierr =   MPI_Type_free( &type );
+                     ierr =   HPL_MPI_Type_free( &type );
 #else
 /*
  * In our case, LDU is N - do not use the MPI Datatypes
  */
                   if( ierr == MPI_SUCCESS )
-                     ierr =   MPI_Recv( Mptr( U, 0, ibuf, LDU ), lbuf*N,
-                                        MPI_DOUBLE, IPMAP[npm1-partner],
-                                        Cmsgid, comm, &status );
+                     ierr =   HPL_MPI_Recv( Mptr( U, 0, ibuf, LDU ), lbuf*N,
+                                            MPI_DOUBLE, IPMAP[npm1-partner],
+                                            Cmsgid, comm, &status );
 #endif
                }
                else if( partner < nprow )
@@ -228,27 +228,27 @@ void HPL_spreadT
                   if( ierr == MPI_SUCCESS )
                   {
                      if( LDU == N )
-                        ierr = MPI_Type_contiguous( lbuf*LDU, MPI_DOUBLE,
-                                                    &type );
+                        ierr = HPL_MPI_Type_contiguous( lbuf*LDU, MPI_DOUBLE,
+                                                        &type );
                      else
-                        ierr = MPI_Type_vector( lbuf, N, LDU, MPI_DOUBLE,
+                        ierr = HPL_MPI_Type_vector( lbuf, N, LDU, MPI_DOUBLE,
                                                 &type );
                   }
                   if( ierr == MPI_SUCCESS )
-                     ierr =   MPI_Type_commit( &type );
+                     ierr =   HPL_MPI_Type_commit( &type );
                   if( ierr == MPI_SUCCESS )
-                     ierr =   MPI_Send( Mptr( U, 0, ibuf, LDU ), 1, type,
-                                        IPMAP[npm1-partner], Cmsgid, comm );
+                     ierr =   HPL_MPI_Send( Mptr( U, 0, ibuf, LDU ), 1, type,
+                                            IPMAP[npm1-partner], Cmsgid, comm );
                   if( ierr == MPI_SUCCESS )
-                     ierr =   MPI_Type_free( &type );
+                     ierr =   HPL_MPI_Type_free( &type );
 #else
 /*
  * In our case, LDU is N - do not use the MPI Datatypes
  */
                   if( ierr == MPI_SUCCESS )
-                     ierr =   MPI_Send( Mptr( U, 0, ibuf, LDU ), lbuf*N,
-                                        MPI_DOUBLE, IPMAP[npm1-partner],
-                                        Cmsgid, comm );
+                     ierr =   HPL_MPI_Send( Mptr( U, 0, ibuf, LDU ), lbuf*N,
+                                            MPI_DOUBLE, IPMAP[npm1-partner],
+                                            Cmsgid, comm );
 #endif
                }
             }
@@ -297,28 +297,28 @@ void HPL_spreadT
                   if( ierr == MPI_SUCCESS )
                   {
                      if( LDU == N )
-                        ierr = MPI_Type_contiguous( lbuf*LDU, MPI_DOUBLE,
-                                                    &type );
+                        ierr = HPL_MPI_Type_contiguous( lbuf*LDU, MPI_DOUBLE,
+                                                        &type );
                      else
-                        ierr = MPI_Type_vector( lbuf, N, LDU, MPI_DOUBLE,
-                                                &type );
+                        ierr = HPL_MPI_Type_vector( lbuf, N, LDU, MPI_DOUBLE,
+                                                    &type );
                   }
                   if( ierr == MPI_SUCCESS )
-                     ierr =   MPI_Type_commit( &type );
+                     ierr =   HPL_MPI_Type_commit( &type );
                   if( ierr == MPI_SUCCESS )
-                     ierr =   MPI_Recv( Mptr( U, 0, ibuf, LDU ), 1, type,
-                                        IPMAP[SRCDIST+partner], Cmsgid,
-                                        comm, &status );
+                     ierr =   HPL_MPI_Recv( Mptr( U, 0, ibuf, LDU ), 1, type,
+                                            IPMAP[SRCDIST+partner], Cmsgid,
+                                            comm, &status );
                   if( ierr == MPI_SUCCESS )
-                     ierr =   MPI_Type_free( &type );
+                     ierr =   HPL_MPI_Type_free( &type );
 #else
 /*
  * In our case, LDU is N - do not use the MPI Datatypes
  */
                   if( ierr == MPI_SUCCESS )
-                     ierr =   MPI_Recv( Mptr( U, 0, ibuf, LDU ), lbuf*N,
-                                        MPI_DOUBLE, IPMAP[SRCDIST+partner],
-                                        Cmsgid, comm, &status );
+                     ierr =   HPL_MPI_Recv( Mptr( U, 0, ibuf, LDU ), lbuf*N,
+                                            MPI_DOUBLE, IPMAP[SRCDIST+partner],
+                                            Cmsgid, comm, &status );
 #endif
                }
                else if( partner < nprow )
@@ -327,28 +327,28 @@ void HPL_spreadT
                   if( ierr == MPI_SUCCESS )
                   {
                      if( LDU == N )
-                        ierr = MPI_Type_contiguous( lbuf*LDU, MPI_DOUBLE,
-                                                    &type );
+                        ierr = HPL_MPI_Type_contiguous( lbuf*LDU, MPI_DOUBLE,
+                                                        &type );
                      else
-                        ierr = MPI_Type_vector( lbuf, N, LDU, MPI_DOUBLE,
+                        ierr = HPL_MPI_Type_vector( lbuf, N, LDU, MPI_DOUBLE,
                                                 &type );
                   }
                   if( ierr == MPI_SUCCESS )
-                     ierr =   MPI_Type_commit( &type );
+                     ierr =   HPL_MPI_Type_commit( &type );
                   if( ierr == MPI_SUCCESS )
-                     ierr =   MPI_Send( Mptr( U, 0, ibuf, LDU ), 1, type,
-                                        IPMAP[SRCDIST+partner], Cmsgid,
-                                        comm );
+                     ierr =   HPL_MPI_Send( Mptr( U, 0, ibuf, LDU ), 1, type,
+                                           IPMAP[SRCDIST+partner], Cmsgid,
+                                           comm );
                   if( ierr == MPI_SUCCESS )
-                     ierr =   MPI_Type_free( &type );
+                     ierr =   HPL_MPI_Type_free( &type );
 #else
 /*
  * In our case, LDU is N - do not use the MPI Datatypes
  */
                   if( ierr == MPI_SUCCESS )
-                     ierr =   MPI_Send( Mptr( U, 0, ibuf, LDU ), lbuf*N,
-                                        MPI_DOUBLE, IPMAP[SRCDIST+partner],
-                                        Cmsgid, comm );
+                     ierr =   HPL_MPI_Send( Mptr( U, 0, ibuf, LDU ), lbuf*N,
+                                            MPI_DOUBLE, IPMAP[SRCDIST+partner],
+                                            Cmsgid, comm );
 #endif
                }
             }

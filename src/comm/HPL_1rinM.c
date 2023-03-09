@@ -150,11 +150,11 @@ int HPL_bcast_1rinM( PANEL, IFLAG )
  
    if( rank == root )
    {
-      ierr = MPI_Send( _M_BUFF, _M_COUNT, _M_TYPE, next, msgid, comm );
+      ierr = HPL_MPI_Send( _M_BUFF, _M_COUNT, _M_TYPE, next, msgid, comm );
       if( ( ierr == MPI_SUCCESS ) && ( size > 2 ) )
       {
-         ierr = MPI_Send( _M_BUFF, _M_COUNT, _M_TYPE, MModAdd1( next,
-                          size ), msgid, comm );
+         ierr = HPL_MPI_Send( _M_BUFF, _M_COUNT, _M_TYPE, MModAdd1( next,
+                              size ), msgid, comm );
       }
    }
    else
@@ -164,19 +164,19 @@ int HPL_bcast_1rinM( PANEL, IFLAG )
           ( MModSub1( prev, size ) == root ) ) partner = root;
       else                                     partner = prev;
 
-      ierr = MPI_Iprobe( partner, msgid, comm, &go, &PANEL->status[0] );
+      ierr = HPL_MPI_Iprobe( partner, msgid, comm, &go, &PANEL->status[0] );
 
       if( ierr == MPI_SUCCESS )
       {
          if( go != 0 )
          {
-            ierr = MPI_Recv( _M_BUFF, _M_COUNT, _M_TYPE, partner, msgid,
-                             comm, &PANEL->status[0] );
+            ierr = HPL_MPI_Recv( _M_BUFF, _M_COUNT, _M_TYPE, partner, msgid,
+                                 comm, &PANEL->status[0] );
             if( ( ierr == MPI_SUCCESS ) &&
                 ( prev != root ) && ( next != root ) )
             {
-               ierr = MPI_Send( _M_BUFF, _M_COUNT, _M_TYPE, next, msgid,
-                                comm );
+               ierr = HPL_MPI_Send( _M_BUFF, _M_COUNT, _M_TYPE, next, msgid,
+                                    comm );
             }
          }
          else { *IFLAG = HPL_KEEP_TESTING; return( *IFLAG ); }
@@ -216,7 +216,7 @@ int HPL_bwait_1rinM( PANEL )
  * Release the arrays of request / status / data-types and buffers
  */
 #ifdef HPL_USE_MPI_DATATYPE
-   ierr = MPI_Type_free( &PANEL->dtypes[0] );
+   ierr = HPL_MPI_Type_free( &PANEL->dtypes[0] );
    return( ( ierr == MPI_SUCCESS ? HPL_SUCCESS : HPL_FAILURE ) );
 #else
    return( HPL_SUCCESS );

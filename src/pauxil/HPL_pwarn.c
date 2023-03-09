@@ -121,7 +121,7 @@ va_dcl
    (void) vsprintf( cline, FORM, argptr );
    va_end( argptr ); 
 
-   MPI_Comm_rank( MPI_COMM_WORLD, &rank );
+   HPL_MPI_Comm_rank( MPI_COMM_WORLD, &rank );
 /*
  * Display an error message
  */

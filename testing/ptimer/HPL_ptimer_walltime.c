@@ -94,7 +94,7 @@ double HPL_ptimer_walltime( void )
 double HPL_ptimer_walltime()
 #endif
 {
-   return( MPI_Wtime() );
+   return( HPL_MPI_Wtime() );
 }
  
 #endif

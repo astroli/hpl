@@ -188,11 +188,11 @@ int HPL_bcast_blonM( PANEL, IFLAG )
          ierr =   HPL_packL( PANEL, 0, PANEL->len, I_SEND );
 #endif
       if( ierr == MPI_SUCCESS )
-         ierr =   MPI_Ssend( _M_BUFF_S1, _M_COUNT_S1, _M_TYPE_S1,
-                             MModAdd1( rank, size ), msgid, comm );
+         ierr =   HPL_MPI_Ssend( _M_BUFF_S1, _M_COUNT_S1, _M_TYPE_S1,
+                                 MModAdd1( rank, size ), msgid, comm );
 #ifdef HPL_USE_MPI_DATATYPE
       if( ierr == MPI_SUCCESS )
-         ierr =   MPI_Type_free( &PANEL->dtypes[I_SEND] );
+         ierr =   HPL_MPI_Type_free( &PANEL->dtypes[I_SEND] );
 #endif
    }
    else if( prev == root )
@@ -203,7 +203,7 @@ int HPL_bcast_blonM( PANEL, IFLAG )
  * some machines. It is currently disabled until a better understanding
  * is acquired.
  *
- *    ierr = MPI_Iprobe( root, msgid, comm, &go, &PANEL->status[0] );
+ *    ierr = HPL_MPI_Iprobe( root, msgid, comm, &go, &PANEL->status[0] );
  */
       if( ierr == MPI_SUCCESS )
       {                                  /* if panel is here, proceed */
@@ -213,11 +213,11 @@ int HPL_bcast_blonM( PANEL, IFLAG )
             ierr =      HPL_packL( PANEL, 0, PANEL->len, I_RECV );
 #endif
             if( ierr == MPI_SUCCESS )
-               ierr =   MPI_Recv( _M_BUFF_R1, _M_COUNT_R1, _M_TYPE_R1,
+               ierr =   HPL_MPI_Recv( _M_BUFF_R1, _M_COUNT_R1, _M_TYPE_R1,
                                   root, msgid, comm, &PANEL->status[0] );
 #ifdef HPL_USE_MPI_DATATYPE
             if( ierr == MPI_SUCCESS )
-               ierr =   MPI_Type_free( &PANEL->dtypes[I_RECV] );
+               ierr =   HPL_MPI_Type_free( &PANEL->dtypes[I_RECV] );
 #endif
          }
          else { *IFLAG = HPL_KEEP_TESTING; return( HPL_KEEP_TESTING ); }
@@ -267,7 +267,7 @@ int HPL_bcast_blonM( PANEL, IFLAG )
  * is acquired.
  */
 #if 0
-            ierr = MPI_Iprobe( partner, msgid, comm, &go, &PANEL->status[0] );
+            ierr = HPL_MPI_Iprobe( partner, msgid, comm, &go, &PANEL->status[0] );
   
             if( ierr == MPI_SUCCESS )
             {        /* if panel is not here, return and keep testing */
@@ -282,18 +282,18 @@ int HPL_bcast_blonM( PANEL, IFLAG )
                   ierr =   HPL_packL( PANEL, ibuf, lbuf, I_RECV );
 #endif
                if( ierr == MPI_SUCCESS )
-                  ierr =   MPI_Recv( _M_BUFF_R2, _M_COUNT_R2, _M_TYPE_R2,
-                                     partner, msgid, comm, &PANEL->status[0] );
+                  ierr =   HPL_MPI_Recv( _M_BUFF_R2, _M_COUNT_R2, _M_TYPE_R2,
+                                         partner, msgid, comm, &PANEL->status[0] );
 #ifdef HPL_USE_MPI_DATATYPE
                if( ierr == MPI_SUCCESS )
-                  ierr =   MPI_Type_free( &PANEL->dtypes[I_RECV] );
+                  ierr =   HPL_MPI_Type_free( &PANEL->dtypes[I_RECV] );
 #endif
             }
             else       /* Recv message of length zero to enable probe */
             {
                if( ierr == MPI_SUCCESS )
-                  ierr = MPI_Recv( (void *)(&dummy), 0, MPI_BYTE, partner,
-                                   msgid, comm, &PANEL->status[0] );
+                  ierr = HPL_MPI_Recv( (void *)(&dummy), 0, MPI_BYTE, partner,
+                                       msgid, comm, &PANEL->status[0] );
             }
          }
          else if( partner < npm1 )
@@ -308,18 +308,18 @@ int HPL_bcast_blonM( PANEL, IFLAG )
                   ierr =   HPL_packL( PANEL, ibuf, lbuf, I_SEND );
 #endif
                if( ierr == MPI_SUCCESS )
-                  ierr =   MPI_Ssend( _M_BUFF_S2, _M_COUNT_S2, _M_TYPE_S2,
-                                      partner, msgid, comm );
+                  ierr =   HPL_MPI_Ssend( _M_BUFF_S2, _M_COUNT_S2, _M_TYPE_S2,
+                                          partner, msgid, comm );
 #ifdef HPL_USE_MPI_DATATYPE
                if( ierr == MPI_SUCCESS )
-                  ierr =   MPI_Type_free( &PANEL->dtypes[I_SEND] );
+                  ierr =   HPL_MPI_Type_free( &PANEL->dtypes[I_SEND] );
 #endif
             }
             else       /* Recv message of length zero to enable probe */
             {
                if( ierr == MPI_SUCCESS )
-                  ierr =   MPI_Ssend( (void *)(&dummy), 0, MPI_BYTE,
-                                      partner, msgid, comm );
+                  ierr =   HPL_MPI_Ssend( (void *)(&dummy), 0, MPI_BYTE,
+                                          partner, msgid, comm );
             }
          }
       }
@@ -376,15 +376,15 @@ int HPL_bcast_blonM( PANEL, IFLAG )
             ierr =   HPL_packL( PANEL, ibufS, lbufS, I_SEND );
 #endif
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Issend( _M_ROLL_BUFF_S, _M_ROLL_COUNT_S,
-                                 _M_ROLL_TYPE_S, partner, msgid, comm,
-                                 &PANEL->request[0] );
+            ierr =   HPL_MPI_Issend( _M_ROLL_BUFF_S, _M_ROLL_COUNT_S,
+                                    _M_ROLL_TYPE_S, partner, msgid, comm,
+                                    &PANEL->request[0] );
       }
       else
       {
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Issend( (void *)(&dummy), 0, MPI_BYTE, partner,
-                                 msgid, comm, &PANEL->request[0] );
+            ierr =   HPL_MPI_Issend( (void *)(&dummy), 0, MPI_BYTE, partner,
+                                     msgid, comm, &PANEL->request[0] );
       }
  
       if(  lbufR > 0 )
@@ -394,26 +394,26 @@ int HPL_bcast_blonM( PANEL, IFLAG )
             ierr =   HPL_packL( PANEL, ibufR, lbufR, I_RECV );
 #endif
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Recv( _M_ROLL_BUFF_R, _M_ROLL_COUNT_R,
-                               _M_ROLL_TYPE_R, partner, msgid, comm,
-                               &PANEL->status[0] );
+            ierr =   HPL_MPI_Recv( _M_ROLL_BUFF_R, _M_ROLL_COUNT_R,
+                                  _M_ROLL_TYPE_R, partner, msgid, comm,
+                                  &PANEL->status[0] );
 #ifdef HPL_USE_MPI_DATATYPE
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Type_free( &PANEL->dtypes[I_RECV] );
+            ierr =   HPL_MPI_Type_free( &PANEL->dtypes[I_RECV] );
 #endif
       }
       else
       {
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Recv( (void *)(&dummy), 0, MPI_BYTE, partner,
-                               msgid, comm, &PANEL->status[0] );
+            ierr =   HPL_MPI_Recv( (void *)(&dummy), 0, MPI_BYTE, partner,
+                                   msgid, comm, &PANEL->status[0] );
       }
  
       if( ierr == MPI_SUCCESS )
          ierr =   MPI_Wait ( &PANEL->request[0], &PANEL->status[0] );
 #ifdef HPL_USE_MPI_DATATYPE
       if( ( lbufS > 0 ) && ( ierr == MPI_SUCCESS ) )
-         ierr =   MPI_Type_free( &PANEL->dtypes[I_SEND] );
+         ierr =   HPL_MPI_Type_free( &PANEL->dtypes[I_SEND] );
 #endif
    }
 /*

@@ -149,7 +149,8 @@ am_libhpl_a_OBJECTS = auxil/HPL_dlatcpy.$(OBJEXT) \
 	comm/HPL_blong.$(OBJEXT) comm/HPL_1ring.$(OBJEXT) \
 	comm/HPL_1rinM.$(OBJEXT) comm/HPL_2rinM.$(OBJEXT) \
 	comm/HPL_2ring.$(OBJEXT) comm/HPL_blonM.$(OBJEXT) \
-	comm/HPL_packL.$(OBJEXT) grid/HPL_reduce.$(OBJEXT) \
+	comm/HPL_packL.$(OBJEXT) comm/HPL_mpi.$(OBJEXT) \
+	grid/HPL_reduce.$(OBJEXT) \
 	grid/HPL_sum.$(OBJEXT) grid/HPL_grid_info.$(OBJEXT) \
 	grid/HPL_grid_init.$(OBJEXT) grid/HPL_all_reduce.$(OBJEXT) \
 	grid/HPL_broadcast.$(OBJEXT) grid/HPL_grid_exit.$(OBJEXT) \
@@ -231,7 +232,8 @@ am__depfiles_remade = auxil/$(DEPDIR)/HPL_dlacpy.Po \
 	comm/$(DEPDIR)/HPL_blonM.Po comm/$(DEPDIR)/HPL_blong.Po \
 	comm/$(DEPDIR)/HPL_bwait.Po comm/$(DEPDIR)/HPL_packL.Po \
 	comm/$(DEPDIR)/HPL_recv.Po comm/$(DEPDIR)/HPL_sdrv.Po \
-	comm/$(DEPDIR)/HPL_send.Po grid/$(DEPDIR)/HPL_all_reduce.Po \
+	comm/$(DEPDIR)/HPL_send.Po comm/$(DEPDIR)/HPL_mpi.Po \
+	grid/$(DEPDIR)/HPL_all_reduce.Po \
 	grid/$(DEPDIR)/HPL_barrier.Po grid/$(DEPDIR)/HPL_broadcast.Po \
 	grid/$(DEPDIR)/HPL_grid_exit.Po \
 	grid/$(DEPDIR)/HPL_grid_info.Po \
@@ -430,6 +432,7 @@ blas/HPL_dcopy.c blas/HPL_dgemm.c blas/HPL_dgemv.c blas/HPL_dger.c \
 comm/HPL_sdrv.c comm/HPL_send.c comm/HPL_recv.c comm/HPL_bcast.c \
 comm/HPL_binit.c comm/HPL_bwait.c comm/HPL_blong.c comm/HPL_1ring.c \
 comm/HPL_1rinM.c comm/HPL_2rinM.c comm/HPL_2ring.c comm/HPL_blonM.c comm/HPL_packL.c \
+comm/HPL_mpi.c \
 grid/HPL_reduce.c grid/HPL_sum.c grid/HPL_grid_info.c grid/HPL_grid_init.c \
 grid/HPL_all_reduce.c grid/HPL_broadcast.c grid/HPL_grid_exit.c grid/HPL_max.c \
 grid/HPL_min.c grid/HPL_all_reduce.c grid/HPL_barrier.c \
@@ -594,6 +597,8 @@ comm/HPL_2ring.$(OBJEXT): comm/$(am__dirstamp) \
 comm/HPL_blonM.$(OBJEXT): comm/$(am__dirstamp) \
 	comm/$(DEPDIR)/$(am__dirstamp)
 comm/HPL_packL.$(OBJEXT): comm/$(am__dirstamp) \
+	comm/$(DEPDIR)/$(am__dirstamp)
+comm/HPL_mpi.$(OBJEXT): comm/$(am__dirstamp) \
 	comm/$(DEPDIR)/$(am__dirstamp)
 grid/$(am__dirstamp):
 	@$(MKDIR_P) grid
@@ -823,6 +828,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@comm/$(DEPDIR)/HPL_recv.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@comm/$(DEPDIR)/HPL_sdrv.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@comm/$(DEPDIR)/HPL_send.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@comm/$(DEPDIR)/HPL_mpi.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@grid/$(DEPDIR)/HPL_all_reduce.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@grid/$(DEPDIR)/HPL_barrier.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@grid/$(DEPDIR)/HPL_broadcast.Po@am__quote@ # am--include-marker
@@ -1091,6 +1097,7 @@ distclean: distclean-am
 	-rm -f comm/$(DEPDIR)/HPL_recv.Po
 	-rm -f comm/$(DEPDIR)/HPL_sdrv.Po
 	-rm -f comm/$(DEPDIR)/HPL_send.Po
+	-rm -f comm/$(DEPDIR)/HPL_mpi.Po
 	-rm -f grid/$(DEPDIR)/HPL_all_reduce.Po
 	-rm -f grid/$(DEPDIR)/HPL_barrier.Po
 	-rm -f grid/$(DEPDIR)/HPL_broadcast.Po
@@ -1238,6 +1245,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f comm/$(DEPDIR)/HPL_recv.Po
 	-rm -f comm/$(DEPDIR)/HPL_sdrv.Po
 	-rm -f comm/$(DEPDIR)/HPL_send.Po
+	-rm -f comm/$(DEPDIR)/HPL_mpi.Po
 	-rm -f grid/$(DEPDIR)/HPL_all_reduce.Po
 	-rm -f grid/$(DEPDIR)/HPL_barrier.Po
 	-rm -f grid/$(DEPDIR)/HPL_broadcast.Po

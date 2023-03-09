@@ -278,8 +278,8 @@ void HPL_pdinfo
 /* ..
  * .. Executable Statements ..
  */
-   MPI_Comm_rank( MPI_COMM_WORLD, &rank );
-   MPI_Comm_size( MPI_COMM_WORLD, &size );
+   HPL_MPI_Comm_rank( MPI_COMM_WORLD, &rank );
+   HPL_MPI_Comm_size( MPI_COMM_WORLD, &size );
 /*
  * Initialize the TEST data structure with default values
  */
@@ -620,7 +620,7 @@ label_error:
       if( rank == 0 )
          HPL_pwarn( stderr, __LINE__, "HPL_pdinfo",
                     "Illegal input in file HPL.dat. Exiting ..." );
-      MPI_Finalize();
+      HPL_MPI_Finalize();
 #ifdef HPL_CALL_VSIPL
       (void) vsip_finalize( NULL );
 #endif

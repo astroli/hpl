@@ -120,9 +120,9 @@ int HPL_packL
    PANEL->buffers[IBUF] = (void *)(PANEL->L2 + INDEX);
    PANEL->counts [IBUF] = 1;
 
-   ierr =      MPI_Type_contiguous( LEN, MPI_DOUBLE, &PANEL->dtypes[IBUF] );
+   ierr =      HPL_MPI_Type_contiguous( LEN, MPI_DOUBLE, &PANEL->dtypes[IBUF] );
    if( ierr == MPI_SUCCESS )
-      ierr =   MPI_Type_commit( &PANEL->dtypes[IBUF] );
+      ierr =   HPL_MPI_Type_commit( &PANEL->dtypes[IBUF] );
 
    return( ierr );
 #else
@@ -169,7 +169,7 @@ int HPL_packL
          type[nbufs] = MPI_DOUBLE;
          blen[nbufs] = m1;
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Get_address( bufs[nbufs], &disp[nbufs] );
+            ierr =   HPL_MPI_Get_address( bufs[nbufs], &disp[nbufs] );
  
          nbufs++; len -= m1; j1++; ibuf += m1;
 /*
@@ -183,7 +183,7 @@ int HPL_packL
             type[nbufs] = MPI_DOUBLE;
             blen[nbufs] = m1;
             if( ierr == MPI_SUCCESS )
-               ierr =   MPI_Get_address( bufs[nbufs], &disp[nbufs] );
+               ierr =   HPL_MPI_Get_address( bufs[nbufs], &disp[nbufs] );
  
             nbufs++; len -= m1; j1++; ibuf += m1;
          }
@@ -197,7 +197,7 @@ int HPL_packL
          type[nbufs] = MPI_DOUBLE;
          blen[nbufs] = len;
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Get_address( bufs[nbufs], &disp[nbufs] );
+            ierr =   HPL_MPI_Get_address( bufs[nbufs], &disp[nbufs] );
          nbufs++;
       }
  
@@ -208,7 +208,7 @@ int HPL_packL
  * construct the struct type 
  */
       if( ierr == MPI_SUCCESS )
-         ierr =   MPI_Type_create_struct( nbufs, blen, disp, type,
+         ierr =   HPL_MPI_Type_create_struct( nbufs, blen, disp, type,
                                    &PANEL->dtypes[IBUF] );
 /*
  * release temporaries
@@ -221,7 +221,7 @@ int HPL_packL
  * commit the type 
  */
       if( ierr == MPI_SUCCESS )
-         ierr =   MPI_Type_commit( &PANEL->dtypes[IBUF] );
+         ierr =   HPL_MPI_Type_commit( &PANEL->dtypes[IBUF] );
 
       return( ierr );
    }

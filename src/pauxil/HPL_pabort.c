@@ -115,7 +115,7 @@ va_dcl
    (void) vsprintf( cline, FORM, argptr );
    va_end( argptr ); 
 
-   MPI_Comm_rank( MPI_COMM_WORLD, &rank );
+   HPL_MPI_Comm_rank( MPI_COMM_WORLD, &rank );
 /*
  * Display an error message
  */
@@ -129,7 +129,7 @@ va_dcl
                    "HPL ERROR", "from process #", rank, "on line", LINE,
                    "of function", SRNAME, cline );
 
-   MPI_Abort( MPI_COMM_WORLD, -1 );
+   HPL_MPI_Abort( MPI_COMM_WORLD, -1 );
    exit( -1 );
 /*
  * End of HPL_pabort

@@ -115,7 +115,7 @@ int HPL_grid_init
 /* ..
  * .. Executable Statements ..
  */
-   MPI_Comm_rank( COMM, &rank ); MPI_Comm_size( COMM, &size );
+   HPL_MPI_Comm_rank( COMM, &rank ); HPL_MPI_Comm_size( COMM, &size );
 /*
  * Abort if illegal process grid
  */
@@ -167,14 +167,14 @@ int HPL_grid_init
  * All communicator, leave if I am not part of this grid. Creation of the
  * row- and column communicators.
  */
-   ierr = MPI_Comm_split( COMM, ( rank < nprocs ? 0 : MPI_UNDEFINED ),
-                          rank, &(GRID->all_comm) );
+   ierr = HPL_MPI_Comm_split( COMM, ( rank < nprocs ? 0 : MPI_UNDEFINED ),
+                              rank, &(GRID->all_comm) );
    if( GRID->all_comm == MPI_COMM_NULL ) return( ierr );
 
-   ierr = MPI_Comm_split( GRID->all_comm, myrow, mycol, &(GRID->row_comm) );
+   ierr = HPL_MPI_Comm_split( GRID->all_comm, myrow, mycol, &(GRID->row_comm) );
    if( ierr != MPI_SUCCESS ) hplerr = ierr;
 
-   ierr = MPI_Comm_split( GRID->all_comm, mycol, myrow, &(GRID->col_comm) );
+   ierr = HPL_MPI_Comm_split( GRID->all_comm, mycol, myrow, &(GRID->col_comm) );
    if( ierr != MPI_SUCCESS ) hplerr = ierr;
 
    return( hplerr );

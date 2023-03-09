@@ -193,29 +193,29 @@ void HPL_spreadN
                if( mydist & ip2 )
                {
                   if( ierr == MPI_SUCCESS )  
-                     ierr =   MPI_Type_vector( N, lbuf, LDU, MPI_DOUBLE,
-                                               &type );
+                     ierr =   HPL_MPI_Type_vector( N, lbuf, LDU, MPI_DOUBLE,
+                                                   &type );
                   if( ierr == MPI_SUCCESS )  
-                     ierr =   MPI_Type_commit( &type );
+                     ierr =   HPL_MPI_Type_commit( &type );
                   if( ierr == MPI_SUCCESS )  
-                     ierr =   MPI_Recv( Mptr( U, ibuf, 0, LDU ), 1, type,
-                                        IPMAP[npm1-partner], Cmsgid, comm,
-                                        &status );
+                     ierr =   HPL_MPI_Recv( Mptr( U, ibuf, 0, LDU ), 1, type,
+                                            IPMAP[npm1-partner], Cmsgid, comm,
+                                            &status );
                   if( ierr == MPI_SUCCESS )  
-                     ierr =   MPI_Type_free(   &type );
+                     ierr =   HPL_MPI_Type_free(   &type );
                }
                else if( partner < nprow )
                {
                   if( ierr == MPI_SUCCESS )  
-                     ierr =   MPI_Type_vector( N, lbuf, LDU, MPI_DOUBLE,
-                                               &type );
+                     ierr =   HPL_MPI_Type_vector( N, lbuf, LDU, MPI_DOUBLE,
+                                                   &type );
                   if( ierr == MPI_SUCCESS )  
-                     ierr =   MPI_Type_commit( &type );
+                     ierr =   HPL_MPI_Type_commit( &type );
                   if( ierr == MPI_SUCCESS )  
-                     ierr =   MPI_Send( Mptr( U, ibuf, 0, LDU ), 1, type,
-                                        IPMAP[npm1-partner], Cmsgid, comm );
+                     ierr =   HPL_MPI_Send( Mptr( U, ibuf, 0, LDU ), 1, type,
+                                            IPMAP[npm1-partner], Cmsgid, comm );
                   if( ierr == MPI_SUCCESS )  
-                     ierr =   MPI_Type_free(   &type );
+                     ierr =   HPL_MPI_Type_free(   &type );
                }
             }
          }
@@ -257,30 +257,30 @@ void HPL_spreadN
                if( mydist & ip2 )
                {
                   if( ierr == MPI_SUCCESS )  
-                     ierr =   MPI_Type_vector( N, lbuf, LDU, MPI_DOUBLE,
-                                               &type );
+                     ierr =   HPL_MPI_Type_vector( N, lbuf, LDU, MPI_DOUBLE,
+                                                   &type );
                   if( ierr == MPI_SUCCESS )  
-                     ierr =   MPI_Type_commit( &type );
+                     ierr =   HPL_MPI_Type_commit( &type );
                   if( ierr == MPI_SUCCESS )  
-                     ierr =   MPI_Recv( Mptr( U, ibuf, 0, LDU ), 1, type,
-                                        IPMAP[SRCDIST+partner], Cmsgid,
-                                        comm, &status );
+                     ierr =   HPL_MPI_Recv( Mptr( U, ibuf, 0, LDU ), 1, type,
+                                            IPMAP[SRCDIST+partner], Cmsgid,
+                                            comm, &status );
                   if( ierr == MPI_SUCCESS )  
-                     ierr =   MPI_Type_free(   &type );
+                     ierr =   HPL_MPI_Type_free(   &type );
                }
                else if( partner < nprow )
                {
                   if( ierr == MPI_SUCCESS )  
-                     ierr =   MPI_Type_vector( N, lbuf, LDU, MPI_DOUBLE,
-                                               &type );
+                     ierr =   HPL_MPI_Type_vector( N, lbuf, LDU, MPI_DOUBLE,
+                                                   &type );
                   if( ierr == MPI_SUCCESS )  
-                     ierr =   MPI_Type_commit( &type );
+                     ierr =   HPL_MPI_Type_commit( &type );
                   if( ierr == MPI_SUCCESS )  
-                     ierr =   MPI_Send( Mptr( U, ibuf, 0, LDU ), 1, type,
-                                        IPMAP[SRCDIST+partner], Cmsgid,
-                                        comm );
+                     ierr =   HPL_MPI_Send( Mptr( U, ibuf, 0, LDU ), 1, type,
+                                            IPMAP[SRCDIST+partner], Cmsgid,
+                                            comm );
                   if( ierr == MPI_SUCCESS )  
-                     ierr =   MPI_Type_free(   &type );
+                     ierr =   HPL_MPI_Type_free(   &type );
                }
             }
          }

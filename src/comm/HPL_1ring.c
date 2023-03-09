@@ -149,26 +149,26 @@ int HPL_bcast_1ring( PANEL, IFLAG )
 
    if( rank == root )
    {
-      ierr = MPI_Send( _M_BUFF, _M_COUNT, _M_TYPE, MModAdd1( rank,
-                       size ), msgid, comm );
+      ierr = HPL_MPI_Send( _M_BUFF, _M_COUNT, _M_TYPE, MModAdd1( rank,
+                           size ), msgid, comm );
    }
    else
    {
       prev = MModSub1( rank, size );
 
-      ierr = MPI_Iprobe( prev, msgid, comm, &go, &PANEL->status[0] );
+      ierr = HPL_MPI_Iprobe( prev, msgid, comm, &go, &PANEL->status[0] );
 
       if( ierr == MPI_SUCCESS )
       {
          if( go != 0 )
          {
-            ierr = MPI_Recv( _M_BUFF, _M_COUNT, _M_TYPE, prev, msgid,
-                             comm, &PANEL->status[0] );
+            ierr = HPL_MPI_Recv( _M_BUFF, _M_COUNT, _M_TYPE, prev, msgid,
+                                 comm, &PANEL->status[0] );
             next = MModAdd1( rank, size );
             if( ( ierr == MPI_SUCCESS ) && ( next != root ) )
             {
-               ierr = MPI_Send( _M_BUFF, _M_COUNT, _M_TYPE, next,
-                                msgid, comm );
+               ierr = HPL_MPI_Send( _M_BUFF, _M_COUNT, _M_TYPE, next,
+                                    msgid, comm );
             }
          }
          else { *IFLAG = HPL_KEEP_TESTING; return( *IFLAG ); }
@@ -208,7 +208,7 @@ int HPL_bwait_1ring( PANEL )
  * Release the arrays of request / status / data-types and buffers 
  */
 #ifdef HPL_USE_MPI_DATATYPE
-   ierr = MPI_Type_free( &PANEL->dtypes[0] );
+   ierr = HPL_MPI_Type_free( &PANEL->dtypes[0] );
    return( ( ierr == MPI_SUCCESS ? HPL_SUCCESS : HPL_FAILURE ) );
 #else
    return( HPL_SUCCESS );

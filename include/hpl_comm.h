@@ -155,6 +155,52 @@ int HPL_binit_blonM STDC_ARGS( ( HPL_T_panel *        ) );
 int HPL_bcast_blonM STDC_ARGS( ( HPL_T_panel *, int * ) );
 int HPL_bwait_blonM STDC_ARGS( ( HPL_T_panel *        ) );
 
+#if HPL_CALL_MPI_COMM
+int HPL_MPI_Init(int *argc, char ***argv);
+int HPL_MPI_Finalized(int *flag);
+int HPL_MPI_Finalize(void);
+int HPL_MPI_Comm_free(MPI_Comm *comm);
+int HPL_MPI_Abort(MPI_Comm comm, int errorcode);
+
+int HPL_MPI_Iprobe(int source, int tag, MPI_Comm comm, int *flag,
+                    MPI_Status *status);
+int HPL_MPI_Comm_rank(MPI_Comm comm, int *rank);
+int HPL_MPI_Comm_size(MPI_Comm comm, int *size);
+int HPL_MPI_Comm_split(MPI_Comm comm, int color, int key, MPI_Comm *newcomm);
+
+int HPL_MPI_Send(const void *buf, int count, MPI_Datatype datatype, int dest,
+                 int tag, MPI_Comm comm);
+int HPL_MPI_Ssend(const void *buf, int count, MPI_Datatype datatype, int dest,
+                  int tag, MPI_Comm comm);
+int HPL_MPI_Issend(const void *buf, int count, MPI_Datatype datatype, int dest,
+                   int tag, MPI_Comm comm, MPI_Request *request);
+
+int HPL_MPI_Irecv(void *buf, int count, MPI_Datatype datatype, int source,
+                  int tag, MPI_Comm comm, MPI_Request *request);
+int HPL_MPI_Recv(void *buf, int count, MPI_Datatype datatype, int source,
+                 int tag, MPI_Comm comm, MPI_Status *status);
+
+
+int HPL_MPI_Type_create_struct(int count, const int array_of_block_lengths[],
+                               const MPI_Aint array_of_displacements[],
+                               const MPI_Datatype array_of_types[],
+                               MPI_Datatype *newtype);
+int HPL_MPI_Type_vector(int count, int blocklength, int stride,
+                        MPI_Datatype oldtype, MPI_Datatype *newtype);
+
+int HPL_MPI_Type_commit(MPI_Datatype *type);
+int HPL_MPI_Type_contiguous(int count, MPI_Datatype oldtype,
+                                       MPI_Datatype *newtype);
+int HPL_MPI_Type_free(MPI_Datatype *type);
+
+int HPL_MPI_Wait(MPI_Request *request, MPI_Status *status);
+
+int HPL_MPI_Get_address(const void *location, MPI_Aint *address);
+
+double HPL_MPI_Wtime(void);
+
+#endif
+
 #endif
 /*
  * End of hpl_comm.h

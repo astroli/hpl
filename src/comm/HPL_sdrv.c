@@ -147,48 +147,48 @@ int HPL_sdrv
 /*
  * Post asynchronous receive
  */
-         ierr =      MPI_Type_contiguous( RCOUNT, MPI_DOUBLE, &type[0] );
+         ierr =      HPL_MPI_Type_contiguous( RCOUNT, MPI_DOUBLE, &type[0] );
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Type_commit( &type[0] );
+            ierr =   HPL_MPI_Type_commit( &type[0] );
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Irecv( (void *)(RBUF), 1, type[0], PARTNER,
-                                RTAG, COMM, &request );
+            ierr =   HPL_MPI_Irecv( (void *)(RBUF), 1, type[0], PARTNER,
+                                    RTAG, COMM, &request );
 /*
  * Blocking send
  */
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Type_contiguous( SCOUNT, MPI_DOUBLE, &type[1] );
+            ierr =   HPL_MPI_Type_contiguous( SCOUNT, MPI_DOUBLE, &type[1] );
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Type_commit( &type[1] );
+            ierr =   HPL_MPI_Type_commit( &type[1] );
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Send( (void *)(SBUF), 1, type[1], PARTNER,
-                               STAG, COMM );
+            ierr =   HPL_MPI_Send( (void *)(SBUF), 1, type[1], PARTNER,
+                                   STAG, COMM );
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Type_free( &type[1] );
+            ierr =   HPL_MPI_Type_free( &type[1] );
 /*
  * Wait for the receive to complete
  */
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Wait( &request, &status );
+            ierr =   HPL_MPI_Wait( &request, &status );
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Type_free( &type[0] );
+            ierr =   HPL_MPI_Type_free( &type[0] );
 #else
 /*
  * Post asynchronous receive
  */
-         ierr =      MPI_Irecv( (void *)(RBUF), RCOUNT, MPI_DOUBLE,
-                                PARTNER, RTAG, COMM, &request );
+         ierr =      HPL_MPI_Irecv( (void *)(RBUF), RCOUNT, MPI_DOUBLE,
+                                    PARTNER, RTAG, COMM, &request );
 /*
  * Blocking send
  */
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Send( (void *)(SBUF), SCOUNT, MPI_DOUBLE,
-                               PARTNER, STAG, COMM );
+            ierr =   HPL_MPI_Send( (void *)(SBUF), SCOUNT, MPI_DOUBLE,
+                                    PARTNER, STAG, COMM );
 /*
  * Wait for the receive to complete
  */
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Wait( &request, &status );
+            ierr =   HPL_MPI_Wait( &request, &status );
 #endif
       }
       else
@@ -197,17 +197,17 @@ int HPL_sdrv
  * Blocking receive
  */
 #ifdef HPL_USE_MPI_DATATYPE
-         ierr =      MPI_Type_contiguous( RCOUNT, MPI_DOUBLE, &type[0] );
+         ierr =      HPL_MPI_Type_contiguous( RCOUNT, MPI_DOUBLE, &type[0] );
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Type_commit( &type[0] );
+            ierr =   HPL_MPI_Type_commit( &type[0] );
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Recv( (void *)(RBUF), 1, type[0], PARTNER, RTAG,
-                               COMM, &status );
+            ierr =   HPL_MPI_Recv( (void *)(RBUF), 1, type[0], PARTNER, RTAG,
+                                   COMM, &status );
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Type_free( &type[0] );
+            ierr =   HPL_MPI_Type_free( &type[0] );
 #else
-         ierr =      MPI_Recv( (void *)(RBUF), RCOUNT, MPI_DOUBLE,
-                               PARTNER, RTAG, COMM, &status );
+         ierr =      HPL_MPI_Recv( (void *)(RBUF), RCOUNT, MPI_DOUBLE,
+                                   PARTNER, RTAG, COMM, &status );
 #endif
       }
    }
@@ -217,17 +217,17 @@ int HPL_sdrv
  * Blocking send
  */
 #ifdef HPL_USE_MPI_DATATYPE
-      ierr =      MPI_Type_contiguous( SCOUNT, MPI_DOUBLE, &type[1] );
+      ierr =      HPL_MPI_Type_contiguous( SCOUNT, MPI_DOUBLE, &type[1] );
       if( ierr == MPI_SUCCESS )
-         ierr =   MPI_Type_commit( &type[1] );
+         ierr =   HPL_MPI_Type_commit( &type[1] );
       if( ierr == MPI_SUCCESS )
-         ierr =   MPI_Send( (void *)(SBUF), 1, type[1], PARTNER, STAG,
-                          COMM );
+         ierr =   HPL_MPI_Send( (void *)(SBUF), 1, type[1], PARTNER, STAG,
+                                COMM );
       if( ierr == MPI_SUCCESS )
-         ierr =   MPI_Type_free( &type[1] ) );
+         ierr =   HPL_MPI_Type_free( &type[1] ) );
 #else
-      ierr =      MPI_Send( (void *)(SBUF), SCOUNT, MPI_DOUBLE, PARTNER,
-                            STAG, COMM );
+      ierr =      HPL_MPI_Send( (void *)(SBUF), SCOUNT, MPI_DOUBLE, PARTNER,
+                                 STAG, COMM );
 #endif
    }
    else { ierr = MPI_SUCCESS; }

@@ -181,35 +181,35 @@ void HPL_rollN
       if( lengthR > 0 )
       {
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Type_vector( N, lengthR, LDU, MPI_DOUBLE,
-                                      &type[I_RECV] );
+            ierr =   HPL_MPI_Type_vector( N, lengthR, LDU, MPI_DOUBLE,
+                                          &type[I_RECV] );
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Type_commit( &type[I_RECV] );
+            ierr =   HPL_MPI_Type_commit( &type[I_RECV] );
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Irecv( Mptr( U, ibufR, 0, LDU ), 1, type[I_RECV],
-                                partner, Cmsgid, comm, &request );
+            ierr =   HPL_MPI_Irecv( Mptr( U, ibufR, 0, LDU ), 1, type[I_RECV],
+                                    partner, Cmsgid, comm, &request );
       }
  
       if( lengthS > 0 )
       {
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Type_vector( N, lengthS, LDU, MPI_DOUBLE,
-                                      &type[I_SEND] );
+            ierr =   HPL_MPI_Type_vector( N, lengthS, LDU, MPI_DOUBLE,
+                                          &type[I_SEND] );
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Type_commit( &type[I_SEND] );
+            ierr =   HPL_MPI_Type_commit( &type[I_SEND] );
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Send( Mptr( U, ibufS, 0, LDU ), 1, type[I_SEND],
-                               partner, Cmsgid, comm );
+            ierr =   HPL_MPI_Send( Mptr( U, ibufS, 0, LDU ), 1, type[I_SEND],
+                                   partner, Cmsgid, comm );
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Type_free(   &type[I_SEND] );
+            ierr =   HPL_MPI_Type_free(   &type[I_SEND] );
       }
 
       if( lengthR > 0 )
       {
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Wait( &request, &status );
+            ierr =   HPL_MPI_Wait( &request, &status );
          if( ierr == MPI_SUCCESS )
-            ierr =   MPI_Type_free(   &type[I_RECV] );
+            ierr =   HPL_MPI_Type_free(   &type[I_RECV] );
       }
 /*
  * Probe for column panel - forward it when available

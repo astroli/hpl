@@ -86,11 +86,11 @@ int HPL_grid_exit
  */
    if( GRID->all_comm != MPI_COMM_NULL )
    {
-      mpierr = MPI_Comm_free( &(GRID->row_comm) );
+      mpierr = HPL_MPI_Comm_free( &(GRID->row_comm) );
       if( mpierr != MPI_SUCCESS ) hplerr = mpierr;
-      mpierr = MPI_Comm_free( &(GRID->col_comm) );
+      mpierr = HPL_MPI_Comm_free( &(GRID->col_comm) );
       if( mpierr != MPI_SUCCESS ) hplerr = mpierr;
-      mpierr = MPI_Comm_free( &(GRID->all_comm) );
+      mpierr = HPL_MPI_Comm_free( &(GRID->all_comm) );
       if( mpierr != MPI_SUCCESS ) hplerr = mpierr;
    }
 
