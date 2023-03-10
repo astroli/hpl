@@ -3,6 +3,9 @@
 OPENMPI_INSTALL_PATH=/mnt/workspace/hpl/install
 OPENBLAS_INSTALL_PATH=/mnt/workspace/hpl/install
 
+#OPENMPI_DEBUG=""
+OPENMPI_DEBUG="--enable-debug"
+
 # openmpi
 echo "Build openmpi"
 if [ ! -d openmpi-4.1.5 ]; then
@@ -13,7 +16,7 @@ fi
 pushd openmpi-4.1.5
 if [ ! -d build ]; then
   mkdir build && cd build
-  ../configure --prefix=$OPENMPI_INSTALL_PATH
+  ../configure --prefix=$OPENMPI_INSTALL_PATH $OPENMPI_DEBUG
   make all -j $(nproc)
   make install
 fi
