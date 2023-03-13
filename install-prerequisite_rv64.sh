@@ -1,8 +1,8 @@
 #!/bin/bash
 
 GNU_TOOLCHAIN_PATH=/opt/riscv
-OPENMPI_INSTALL_PATH=/mnt/workspace/hpl_rv64/install
-OPENBLAS_INSTALL_PATH=/mnt/workspace/hpl_rv64/install
+OPENMPI_INSTALL_PATH=/mnt/workspace/hpc/install
+OPENBLAS_INSTALL_PATH=/mnt/workspace/hpc/install
 
 export PATH=$GNU_TOOLCHAIN_PATH/bin:$PATH
 
@@ -23,8 +23,9 @@ fi
     --build=x86_64-linux-gnu \
     --disable-mpi-fortran \
     --disable--oshmem-fortran \
+    --without-memory-manager \
+    --disable-dlopen \
     --enable-static \
-    --disable-shared \
     --prefix=$OPENMPI_INSTALL_PATH
 
   make all -j $(nproc)

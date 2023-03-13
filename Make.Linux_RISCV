@@ -67,8 +67,8 @@ ARCH         = Linux_RISCV
 # - HPL Directory Structure / HPL library ------------------------------
 # ----------------------------------------------------------------------
 #
-TOPdir       = $(HOME)/hpl/hpl_github
-TOPdir       = /mnt/workspace/hpl/hpl_github
+#TOPdir       = $(HOME)/hpl/hpl_github
+TOPdir       = /mnt/workspace/hpc/hpl
 INCdir       = $(TOPdir)/include
 BINdir       = $(TOPdir)/bin/$(ARCH)
 LIBdir       = $(TOPdir)/lib/$(ARCH)
@@ -82,10 +82,12 @@ HPLlib       = $(LIBdir)/libhpl.a
 # header files,  MPlib  is defined  to be the name of  the library to be
 # used. The variable MPdir is only used for defining MPinc and MPlib.
 #
-MPdir        = /home/ubuntu/hpl/install
+#MPdir        = /home/ubuntu/hpl/install
+MPdir        = /mnt/workspace/hpc/install
 MPinc        = -I$(MPdir)/include
 #MPlib        = -L$(MPdir)/lib -lmpi
-MPlib        = -L$(MPdir)/lib -lmpi -lpthread
+#MPlib        = -L$(MPdir)/lib -lmpi -lpthread
+MPlib        = -L$(MPdir)/lib -lopen-pal -lopen-rte -lmpi -lpthread
 #
 # ----------------------------------------------------------------------
 # - Linear Algebra library (BLAS or VSIPL) -----------------------------
@@ -94,7 +96,7 @@ MPlib        = -L$(MPdir)/lib -lmpi -lpthread
 # header files,  LAlib  is defined  to be the name of  the library to be
 # used. The variable LAdir is only used for defining LAinc and LAlib.
 #
-LAdir        = /home/ubuntu/hpl/install/lib
+LAdir        = /mnt/workspace/hpc/install/lib
 LAinc        =
 LAlib        = $(LAdir)/libopenblas.a
 #
@@ -171,15 +173,18 @@ HPL_DEFS     = $(F2CDEFS) $(HPL_OPTS) $(HPL_INCLUDES)
 # - Compilers / linkers - Optimization flags ---------------------------
 # ----------------------------------------------------------------------
 #
-CC           = /usr/bin/gcc
+#CC           ?= /usr/bin/gcc
+CC           = $(CROSS_COMPILE)gcc
 CCNOOPT      = $(HPL_DEFS)
 CCFLAGS      = -march=rv64imafdcv
 CCFLAGS     += $(HPL_DEFS) -fomit-frame-pointer -O3 -funroll-loops -W -Wall
 #
-LINKER       = /usr/bin/gcc
+#LINKER       = /usr/bin/gcc
+LINKER       = $(CROSS_COMPILE)gcc
 LINKFLAGS    = $(CCFLAGS)
 #
-ARCHIVER     = ar
+#ARCHIVER     = ar
+ARCHIVER     = $(CROSS_COMPILE)ar
 ARFLAGS      = r
 RANLIB       = echo
 #
