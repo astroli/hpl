@@ -289,7 +289,12 @@ void HPL_pdinfo
  * Process 0 reads the input data, broadcasts to other processes and
  * writes needed information to TEST->outfp.
  */
+
+#ifdef MPI_PCIE
+   if (rank < size)
+#else
    if( rank == 0 )
+#endif
    {
 /*
  * Open file and skip data file header

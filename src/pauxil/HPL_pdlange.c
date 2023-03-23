@@ -176,8 +176,11 @@ double HPL_pdlange
 /*
  * Find sum of global matrix columns, store on row 0 of process grid
  */
+#ifndef MPI_PCIE
          (void) HPL_reduce( (void *)(work), nq, HPL_DOUBLE, HPL_sum,
                             0, Ccomm );
+#endif
+
 /*
  * Find maximum sum of columns for 1-norm
  */
@@ -226,9 +229,11 @@ double HPL_pdlange
 /*
  * Find max in column 0, store result in process (0,0)
  */
+#ifndef MPI_PCIE
       if( mycol == 0 )
          (void) HPL_reduce( (void *)(&v0), 1, HPL_DOUBLE, HPL_max,
                             0, Ccomm );
+#endif
    }
 /*
  * Broadcast answer to every process in the grid

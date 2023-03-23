@@ -361,8 +361,10 @@ void HPL_pdtest
       {
          BnormI = HPL_rzero;
       }
+#ifndef MPI_PCIE
       (void) HPL_all_reduce( (void *)(&BnormI), 1, HPL_DOUBLE, HPL_max,
                              GRID->col_comm );
+#endif
    }
    (void) HPL_broadcast( (void *)(&BnormI), 1, HPL_DOUBLE,
                           HPL_indxg2p( N, NB, NB, 0, npcol ),

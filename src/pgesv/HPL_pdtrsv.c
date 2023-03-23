@@ -282,9 +282,11 @@ void HPL_pdtrsv
 /*
  * Replicate last solution block
  */
+#ifndef MPI_PCIE
    if( mycol == colprev )
       (void) HPL_broadcast( (void *)(XR), kbprev, HPL_DOUBLE, rowprev,
                             Ccomm );
+#endif
 
    if( Wfr  ) free( W  );
 #ifdef HPL_DETAILED_TIMING
